@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#554b70"
+              android:orientation="vertical">
+
+    <com.tc.seekbar.NumTipSeekBar
+        android:id="@+id/ntsb_seekbar1"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:circleButtonColor="@color/white"
+        app:circleButtonRadius="16dp"
+        app:circleButtonTextColor="@color/purple_82"
+        app:circleButtonTextSize="16sp"
+        app:maxProgress="10"
+        app:progressColor="@color/white"
+        app:progressHeight="20dp"
+        app:selectProgress="1"
+        app:tickBarColor="@color/orange_f6"
+        app:tickBarHeight="8dp"
+        />
+
+    <com.tc.seekbar.NumTipSeekBar
+        android:id="@+id/ntsb_seekbar2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="50dp"
+        app:circleButtonColor="@color/white"
+        app:circleButtonRadius="10dp"
+        app:circleButtonTextColor="@color/purple_82"
+        app:circleButtonTextSize="16sp"
+        app:isRound="false"
+        app:isShowButton="false"
+        app:isShowButtonText="false"
+        app:maxProgress="100"
+        app:progressColor="@color/white"
+        app:progressHeight="10dp"
+        app:selectProgress="10"
+        app:tickBarColor="#000000"
+        app:tickBarHeight="10dp"
+        />
+</LinearLayout>
