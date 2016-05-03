@@ -123,7 +123,10 @@ public class NumTipSeekBar extends View {
      * 是否显示圆角
      */
     private boolean mIsRound;
-
+    /**
+     * 是否触发进度监听
+     */
+    private boolean mIsNotifyListener;
     /**
      * 监听进度条变化
      */
@@ -269,7 +272,7 @@ public class NumTipSeekBar extends View {
         }
         if (progress != mSelectProgress) {
             //发生变化才通知view重新绘制
-            setSelectProgress(progress);
+            setSelectProgress(progress,true);
         }
 
     }
@@ -280,7 +283,7 @@ public class NumTipSeekBar extends View {
         int width = getWidth();
         int height = getHeight();
         initValues(width, height);
-        if (mOnProgressChangeListener != null) {
+        if (mOnProgressChangeListener != null&&mIsNotifyListener) {
             mOnProgressChangeListener.onChange(mSelectProgress);
         }
         if (mIsRound) {
@@ -507,9 +510,20 @@ public class NumTipSeekBar extends View {
     /**
      * 设置当前选中的值
      *
-     * @param selectProgress
+     * @param selectProgress 进度
      */
     public void setSelectProgress(int selectProgress) {
+        mSelectProgress = selectProgress;
+        invalidate();
+    }
+    /**
+     * 设置当前选中的值
+     *
+     * @param selectProgress 进度
+     * @param isNotifyListener 是否通知progresschangelistener
+     */
+    public void setSelectProgress(int selectProgress，boolean isNotifyListener) {
+        mIsNotifyListener=isNotifyListener;
         mSelectProgress = selectProgress;
         invalidate();
     }
