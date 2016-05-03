@@ -126,7 +126,7 @@ public class NumTipSeekBar extends View {
     /**
      * 是否触发进度监听
      */
-    private boolean mIsNotifyListener;
+    private boolean mIsNotifyListener=true;
     /**
      * 监听进度条变化
      */
@@ -284,6 +284,7 @@ public class NumTipSeekBar extends View {
         int height = getHeight();
         initValues(width, height);
         if (mOnProgressChangeListener != null&&mIsNotifyListener) {
+            mIsNotifyListener=true;//恢复默认值
             mOnProgressChangeListener.onChange(mSelectProgress);
         }
         if (mIsRound) {
