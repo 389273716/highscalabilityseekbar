@@ -18,7 +18,7 @@ import java.math.BigDecimal;
  * author：   tc
  * date：     2016/4/30 & 9:30
  * version    1.3.0
- * description  进度条view,按钮带数字提示的seekbar，
+ * description  进度条view,按钮带数字提示的seekbar，设置isEnabled=false，可以禁用触摸设置进度的功能
  * modify by
  */
 public class NumTipSeekBar extends View {
@@ -126,7 +126,12 @@ public class NumTipSeekBar extends View {
     /**
      * 是否触发进度监听
      */
-    private boolean mIsNotifyListener=true;
+    private boolean mIsNotifyListener = true;
+    /**
+     * 起始的进度值，比如从1开始显示
+     */
+    private int mStartProgress;
+
     /**
      * 监听进度条变化
      */
@@ -188,6 +193,7 @@ public class NumTipSeekBar extends View {
         mProgressColor = attr.getColor(R.styleable.NumTipSeekBar_progressColor,
                 getResources().getColor(R.color.white));
         mSelectProgress = attr.getInt(R.styleable.NumTipSeekBar_selectProgress, 0);
+        mStartProgress = attr.getInt(R.styleable.NumTipSeekBar_startProgress, 0);
         mMaxProgress = attr.getInt(R.styleable.NumTipSeekBar_maxProgress, 10);
         mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButtonText, true);
         mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButton, true);
@@ -229,7 +235,10 @@ public class NumTipSeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+        if (!isEnabled()) {
+            //如果设置不可用，则禁用触摸设置进度
+            return false;
+        }
         float x = event.getX();
         float y = event.getY();
         Log.i(TAG, "onTouchEvent: x：" + x);
@@ -272,7 +281,7 @@ public class NumTipSeekBar extends View {
         }
         if (progress != mSelectProgress) {
             //发生变化才通知view重新绘制
-            setSelectProgress(progress,true);
+            setSelectProgress(progress, true);
         }
 
     }
@@ -283,8 +292,8 @@ public class NumTipSeekBar extends View {
         int width = getWidth();
         int height = getHeight();
         initValues(width, height);
-        if (mOnProgressChangeListener != null&&mIsNotifyListener) {
-            mIsNotifyListener=true;//恢复默认值
+        if (mOnProgressChangeListener != null && mIsNotifyListener) {
+            mIsNotifyListener = true;//恢复默认值
             mOnProgressChangeListener.onChange(mSelectProgress);
         }
         if (mIsRound) {
@@ -307,7 +316,8 @@ public class NumTipSeekBar extends View {
                     fontMetrics
                             .top) / 2);
             // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
-            canvas.drawText(String.valueOf(mSelectProgress), mCircleRecf.centerX(), baseline,
+            canvas.drawText(String.valueOf(mSelectProgress), mCircleRecf.centerX
+                            (), baseline,
                     mCircleButtonTextPaint);
 
         }
@@ -316,11 +326,11 @@ public class NumTipSeekBar extends View {
     private void initValues(int width, int height) {
         mViewWidth = width - getPaddingRight() - getPaddingLeft();
         mViewHeight = height;
-        mCirclePotionX = (float) mSelectProgress / mMaxProgress * mViewWidth + getPaddingLeft();
-        Log.i(TAG, "initValues: mViewWidth=" + mViewWidth + "  mViewHeight=" + mViewHeight +
-                "  mCirclePotionX=" + mCirclePotionX + "  mSelectProgress=" + mSelectProgress +
-                " mMaxProgress=" + mMaxProgress +
-                " getPaddingLeft()=" + getPaddingLeft());
+        mCirclePotionX = (float) (mSelectProgress - mStartProgress) /
+                (mMaxProgress - mStartProgress) * mViewWidth + getPaddingLeft();
+//        Log.i(TAG, "initValues: mViewWidth=" + mViewWidth + "  mViewHeight=" + mViewHeight + "
+// mCirclePotionX=" + mCirclePotionX + "  mSelectProgress=" + mSelectProgress + " mMaxProgress="
+// + mMaxProgress + " getPaddingLeft()=" + getPaddingLeft());
         if (mTickBarHeight > mViewHeight) {
             //如果刻度条的高度大于view本身的高度的1/2，则显示不完整，所以处理下。
             mTickBarHeight = mViewHeight;
@@ -515,19 +525,33 @@ public class NumTipSeekBar extends View {
      */
     public void setSelectProgress(int selectProgress) {
         mSelectProgress = selectProgress;
+        if (mSelectProgress > mMaxProgress) {
+            mSelectProgress = mMaxProgress;
+        } else if (mSelectProgress <= mStartProgress) {
+            mSelectProgress = mStartProgress;
+        }
         invalidate();
     }
+
     /**
      * 设置当前选中的值
      *
-     * @param selectProgress 进度
+     * @param selectProgress   进度
      * @param isNotifyListener 是否通知progresschangelistener
      */
-    public void setSelectProgress(int selectProgress，boolean isNotifyListener) {
-        mIsNotifyListener=isNotifyListener;
+    public void setSelectProgress(int selectProgress, boolean isNotifyListener) {
         mSelectProgress = selectProgress;
+        if (mSelectProgress > mMaxProgress) {
+            mSelectProgress = mMaxProgress;
+        } else if (mSelectProgress <= mStartProgress) {
+            mSelectProgress = mStartProgress;
+        }
+        mIsNotifyListener = isNotifyListener;
+        Log.i(TAG, "mSelectProgress: " + mSelectProgress + "  mMaxProgress: " +
+                mMaxProgress);
         invalidate();
     }
+
 
     /**
      * 获取当前的选中值
@@ -538,6 +562,23 @@ public class NumTipSeekBar extends View {
         return mSelectProgress;
     }
 
+    /**
+     * 起始的刻度值
+     *
+     * @return
+     */
+    public int getStartProgress() {
+        return mStartProgress;
+    }
+
+    /**
+     * 设置起始刻度值
+     *
+     * @param startProgress
+     */
+    public void setStartProgress(int startProgress) {
+        mStartProgress = startProgress;
+    }
 
     /**
      * 获取dp对应的px值
