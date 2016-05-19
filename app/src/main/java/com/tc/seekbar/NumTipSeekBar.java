@@ -281,7 +281,7 @@ public class NumTipSeekBar extends View {
         }
         if (progress != mSelectProgress) {
             //发生变化才通知view重新绘制
-            setTouchSelctProgress(progress);
+            setSelctProgress(progress,false);
         }
 
     }
@@ -539,15 +539,7 @@ public class NumTipSeekBar extends View {
         invalidate();
     }
 
-    /**
-     * 设置当前选中的值
-     *
-     * @param selectProgress 进度
-     */
-    public void setTouchSelctProgress(int selectProgress) {
-        getSelectProgressValue(selectProgress);
-        invalidate();
-    }
+  
 
     /**
      * 计算当前选中的进度条的值
