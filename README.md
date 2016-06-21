@@ -1,7 +1,6 @@
 # highscalabilityseekbar
 
-![view截图](https://github.com/389273716/highscalabilityseekbar/blob/master/app%2Fsrc%2Fmain%2Fres
-%2Fmipmap-xhdpi%2Fdemo.jpg)
+![view截图](https://github.com/389273716/highscalabilityseekbar/blob/master/app/src/main/res/mipmap-mdpi/demo.jpg)
 
 ##中文说明：
 
