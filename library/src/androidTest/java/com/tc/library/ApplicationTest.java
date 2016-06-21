@@ -1,4 +1,4 @@
-package com.tc.seekbar;
+package com.tc.library;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

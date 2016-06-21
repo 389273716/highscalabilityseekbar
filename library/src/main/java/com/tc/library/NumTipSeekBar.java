@@ -1,4 +1,4 @@
-package com.tc.seekbar;
+package com.tc.library;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,12 +11,13 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 import java.math.BigDecimal;
 
 
 /**
- * author：   tc
- * date：     2016/4/30 & 9:30
+ * author   tc
+ * date     2016/4/30 9:30
  * version    1.0.0
  * description  进度条view,按钮带数字提示的seekbar，设置isEnabled=false，可以禁用触摸设置进度的功能
  * modify by
@@ -140,7 +141,7 @@ public class NumTipSeekBar extends View {
      */
     private Paint mCircleAperturePaint;
     /**
-     *
+     *是否显示圆形光圈
      */
     private boolean mIsShowCircleAperture;
 
@@ -157,9 +158,9 @@ public class NumTipSeekBar extends View {
     private OnProgressChangeListener mOnProgressChangeListener;
 
     /**
-     * 设置进度条变化的监听器
+     * 设置进度条变化的监听器，当触摸停止时触发
      *
-     * @param onProgressChangeListener
+     * @param onProgressChangeListener 进度条变化的监听器
      */
     public void setOnProgressChangeListener(OnProgressChangeListener onProgressChangeListener) {
         mOnProgressChangeListener = onProgressChangeListener;
@@ -182,8 +183,8 @@ public class NumTipSeekBar extends View {
     /**
      * 初始化view的属性
      *
-     * @param context
-     * @param attrs
+     * @param context 上下文
+     * @param attrs attr属性
      */
     private void init(Context context, AttributeSet attrs) {
 
@@ -390,7 +391,7 @@ public class NumTipSeekBar extends View {
     /**
      * seekbar背后的刻度条高度
      *
-     * @return
+     * @return seekbar背后的刻度条高度
      */
     public float getTickBarHeight() {
         return mTickBarHeight;
@@ -399,7 +400,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置seekbar背后的刻度条高度
      *
-     * @param tickBarHeight
+     * @param tickBarHeight seekbar背后的刻度条高度
      */
     public void setTickBarHeight(float tickBarHeight) {
         mTickBarHeight = tickBarHeight;
@@ -408,7 +409,7 @@ public class NumTipSeekBar extends View {
     /**
      * seekbar背后的刻度条颜色
      *
-     * @return
+     * @return seekbar背后的刻度条颜色
      */
     public int getTickBarColor() {
         return mTickBarColor;
@@ -417,7 +418,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置seekbar背后的刻度条颜色
      *
-     * @param tickBarColor
+     * @param tickBarColor seekbar背后的刻度条颜色
      */
     public void setTickBarColor(int tickBarColor) {
         mTickBarColor = tickBarColor;
@@ -426,7 +427,7 @@ public class NumTipSeekBar extends View {
     /**
      * 圆形按钮颜色
      *
-     * @return
+     * @return 圆形按钮颜色
      */
     public int getCircleButtonColor() {
         return mCircleButtonColor;
@@ -435,7 +436,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置圆形按钮颜色
      *
-     * @param circleButtonColor
+     * @param circleButtonColor 圆形按钮颜色
      */
     public void setCircleButtonColor(int circleButtonColor) {
         mCircleButtonColor = circleButtonColor;
@@ -444,7 +445,7 @@ public class NumTipSeekBar extends View {
     /**
      * 圆形按钮文本颜色
      *
-     * @return
+     * @return 圆形按钮文本颜色
      */
     public int getCircleButtonTextColor() {
         return mCircleButtonTextColor;
@@ -453,7 +454,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置圆形按钮文本颜色
      *
-     * @param circleButtonTextColor
+     * @param circleButtonTextColor 圆形按钮文本颜色
      */
     public void setCircleButtonTextColor(int circleButtonTextColor) {
         mCircleButtonTextColor = circleButtonTextColor;
@@ -462,7 +463,7 @@ public class NumTipSeekBar extends View {
     /**
      * 圆形按钮文本字体大小
      *
-     * @return
+     * @return 圆形按钮文本字体大小
      */
     public float getCircleButtonTextSize() {
         return mCircleButtonTextSize;
@@ -471,7 +472,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置圆形按钮文本字体大小
      *
-     * @param circleButtonTextSize
+     * @param circleButtonTextSize 圆形按钮文本字体大小
      */
     public void setCircleButtonTextSize(float circleButtonTextSize) {
         mCircleButtonTextSize = circleButtonTextSize;
@@ -480,7 +481,7 @@ public class NumTipSeekBar extends View {
     /**
      * 圆形按钮半径
      *
-     * @return
+     * @return 圆形按钮半径
      */
     public float getCircleButtonRadius() {
         return mCircleButtonRadius;
@@ -489,7 +490,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置圆形按钮半径
      *
-     * @param circleButtonRadius
+     * @param circleButtonRadius 圆形按钮半径
      */
     public void setCircleButtonRadius(float circleButtonRadius) {
         mCircleButtonRadius = circleButtonRadius;
@@ -498,7 +499,7 @@ public class NumTipSeekBar extends View {
     /**
      * 进度条高度
      *
-     * @return
+     * @return 进度条高度
      */
     public float getProgressHeight() {
         return mProgressHeight;
@@ -507,7 +508,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置进度条高度
      *
-     * @param progressHeight
+     * @param progressHeight 进度条高度
      */
     public void setProgressHeight(float progressHeight) {
         mProgressHeight = progressHeight;
@@ -516,7 +517,7 @@ public class NumTipSeekBar extends View {
     /**
      * 进度条颜色
      *
-     * @return
+     * @return 进度条颜色
      */
     public int getProgressColor() {
         return mProgressColor;
@@ -525,7 +526,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置进度条颜色
      *
-     * @param progressColor
+     * @param progressColor 进度条颜色
      */
     public void setProgressColor(int progressColor) {
         mProgressColor = progressColor;
@@ -534,7 +535,7 @@ public class NumTipSeekBar extends View {
     /**
      * 最大进度条的值
      *
-     * @return
+     * @return 最大进度条的值
      */
     public int getMaxProgress() {
         return mMaxProgress;
@@ -543,7 +544,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置最大进度条的值
      *
-     * @param maxProgress
+     * @param maxProgress 最大进度条的值
      */
     public void setMaxProgress(int maxProgress) {
         mMaxProgress = maxProgress;
@@ -593,7 +594,7 @@ public class NumTipSeekBar extends View {
     /**
      * 获取当前的选中值
      *
-     * @return
+     * @return 当前的选中值
      */
     public int getSelectProgress() {
         return mSelectProgress;
@@ -602,7 +603,7 @@ public class NumTipSeekBar extends View {
     /**
      * 起始的刻度值
      *
-     * @return
+     * @return 起始的刻度值
      */
     public int getStartProgress() {
         return mStartProgress;
@@ -611,7 +612,7 @@ public class NumTipSeekBar extends View {
     /**
      * 设置起始刻度值
      *
-     * @param startProgress
+     * @param startProgress 起始刻度值
      */
     public void setStartProgress(int startProgress) {
         mStartProgress = startProgress;
@@ -638,14 +639,16 @@ public class NumTipSeekBar extends View {
         mCircleApertureColor = circleApertureColor;
     }
 
+
+
     /**
      * 获取dp对应的px值
      *
-     * @param w
-     * @return
+     * @param value
+     * @return  dp对应的px值
      */
-    private int getDpValue(int w) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, w, getContext()
+    private int getDpValue(int value) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getContext()
                 .getResources().getDisplayMetrics());
     }
 }

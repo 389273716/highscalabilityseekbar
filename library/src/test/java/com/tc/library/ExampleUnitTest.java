@@ -1,4 +1,4 @@
-package com.tc.customview;
+package com.tc.library;
 
 import org.junit.Test;
 

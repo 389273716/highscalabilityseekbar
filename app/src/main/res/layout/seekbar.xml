@@ -6,7 +6,7 @@
               android:background="#554b70"
               android:orientation="vertical">
 
-    <com.tc.seekbar.NumTipSeekBar
+    <com.tc.library.NumTipSeekBar
         android:id="@+id/ntsb_seekbar1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -25,7 +25,7 @@
         app:tickBarHeight="8dp"
         />
 
-    <com.tc.seekbar.NumTipSeekBar
+    <com.tc.library.NumTipSeekBar
         android:id="@+id/ntsb_seekbar2"
         android:layout_width="match_parent"
         android:layout_height="20dp"

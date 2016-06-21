@@ -1,9 +1,11 @@
-package com.tc.seekbar;
+package com.tc.customview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.tc.library.NumTipSeekBar;
 
 
 public class MainActivity extends AppCompatActivity {
