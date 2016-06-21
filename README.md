@@ -12,3 +12,7 @@
 
 Has good expansibility, whether can be set up according to scale shows progress shows progress with rounded corners, radio buttons, radio buttons text value.
 Support the view itself most of the attributes of the XML configuration and code, such as the button color, radius, the progress bar as well as the scale of the color, height, etc.
+
+##How To Use
+
+compile 'com.tc.seekbar:library:0.1.0'
