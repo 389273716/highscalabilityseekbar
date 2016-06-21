@@ -9,7 +9,7 @@
     <com.tc.seekbar.NumTipSeekBar
         android:id="@+id/ntsb_seekbar1"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="40dp"
         android:layout_marginTop="50dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

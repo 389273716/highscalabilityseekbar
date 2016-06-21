@@ -127,6 +127,22 @@ public class NumTipSeekBar extends View {
      * 起始的进度值，比如从1开始显示
      */
     private int mStartProgress;
+    /**
+     * 圆形按钮外边的光圈
+     */
+    private int mCircleApertureWidth;
+    /**
+     * 圆形按钮光圈的颜色
+     */
+    private int mCircleApertureColor;
+    /**
+     * 圆形按钮光圈的paint
+     */
+    private Paint mCircleAperturePaint;
+    /**
+     *
+     */
+    private boolean mIsShowCircleAperture;
 
     /**
      * 监听进度条变化
@@ -184,6 +200,11 @@ public class NumTipSeekBar extends View {
                 .NumTipSeekBar_circleButtonTextSize, getDpValue(16));
         mCircleButtonRadius = attr.getDimensionPixelOffset(R.styleable
                 .NumTipSeekBar_circleButtonRadius, getDpValue(16));
+        mCircleApertureWidth = attr.getDimensionPixelOffset(R.styleable
+                .NumTipSeekBar_circleApertureWidth, getDpValue(0));
+        mCircleApertureColor = attr.getColor(R.styleable.NumTipSeekBar_circleApertureColor,
+                getResources().getColor(R.color.white_1a));
+
         mProgressHeight = attr.getDimensionPixelOffset(R.styleable
                 .NumTipSeekBar_progressHeight, getDpValue(20));
         mProgressColor = attr.getColor(R.styleable.NumTipSeekBar_progressColor,
@@ -212,6 +233,11 @@ public class NumTipSeekBar extends View {
         mCircleButtonPaint.setStyle(Paint.Style.FILL);
         mCircleButtonPaint.setAntiAlias(true);
 
+        mCircleAperturePaint = new Paint();
+        mCircleAperturePaint.setColor(mCircleApertureColor);
+        mCircleAperturePaint.setStyle(Paint.Style.FILL);
+        mCircleAperturePaint.setAntiAlias(true);
+
         mCircleButtonTextPaint = new Paint();
         mCircleButtonTextPaint.setTextAlign(Paint.Align.CENTER);
         mCircleButtonTextPaint.setColor(mCircleButtonTextColor);
@@ -227,6 +253,7 @@ public class NumTipSeekBar extends View {
         mTickBarRecf = new RectF();
         mProgressRecf = new RectF();
         mCircleRecf = new RectF();
+        setCircleApertureWidth(mCircleApertureWidth);
     }
 
     @Override
@@ -247,7 +274,7 @@ public class NumTipSeekBar extends View {
                 return true;
             case MotionEvent.ACTION_UP:
                 if (mOnProgressChangeListener != null) {
-                    Log.i(TAG, "onTouchEvent: 触摸结束，通知监听器-mSelectProgress："+mSelectProgress);
+                    Log.i(TAG, "onTouchEvent: 触摸结束，通知监听器-mSelectProgress：" + mSelectProgress);
                     mOnProgressChangeListener.onChange(mSelectProgress);
                 }
                 return true;
@@ -281,7 +308,7 @@ public class NumTipSeekBar extends View {
         }
         if (progress != mSelectProgress) {
             //发生变化才通知view重新绘制
-            setSelctProgress(progress,false);
+            setSelectProgress(progress, false);
         }
 
     }
@@ -301,10 +328,18 @@ public class NumTipSeekBar extends View {
             canvas.drawRect(mTickBarRecf, mTickBarPaint);
             canvas.drawRect(mProgressRecf, mProgressPaint);
         }
-//        canvas.drawArc(mCircleRecf, 0, 360, true, mCircleButtonPaint);
         if (mIsShowButton) {
+            if (mIsShowCircleAperture) {
+                if (mViewHeight / 2 < mCircleButtonRadius + mCircleApertureWidth) {
+                    mCircleApertureWidth = (int) (mViewHeight / 2 - mCircleButtonRadius);
+                }
+                canvas.drawCircle(mCirclePotionX, mViewHeight / 2, mCircleButtonRadius +
+                                mCircleApertureWidth,
+                        mCircleAperturePaint);
+            }
             canvas.drawCircle(mCirclePotionX, mViewHeight / 2, mCircleButtonRadius,
                     mCircleButtonPaint);
+
         }
         if (mIsShowButtonText) {
             Paint.FontMetricsInt fontMetrics = mCircleButtonTextPaint.getFontMetricsInt();
@@ -539,7 +574,6 @@ public class NumTipSeekBar extends View {
         invalidate();
     }
 
-  
 
     /**
      * 计算当前选中的进度条的值
@@ -581,6 +615,27 @@ public class NumTipSeekBar extends View {
      */
     public void setStartProgress(int startProgress) {
         mStartProgress = startProgress;
+    }
+
+    /**
+     * 设置圆形光圈的宽度，即圆形按钮之外的延伸宽度.超出view高度，自动适配最大值。
+     *
+     * @param circleApertureWidth 宽度,dp
+     */
+    public void setCircleApertureWidth(int circleApertureWidth) {
+        mCircleApertureWidth = getDpValue(circleApertureWidth);
+        mIsShowCircleAperture = true;
+        if (circleApertureWidth <= 0)
+            mIsShowCircleAperture = false;
+    }
+
+    /**
+     * 圆形光圈颜色
+     *
+     * @param circleApertureColor 圆形光圈颜色
+     */
+    public void setCircleApertureColor(int circleApertureColor) {
+        mCircleApertureColor = circleApertureColor;
     }
 
     /**

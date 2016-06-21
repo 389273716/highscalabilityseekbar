@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seekbar);
         NumTipSeekBar seekbar1 = (NumTipSeekBar) findViewById(R.id.ntsb_seekbar1);
+        seekbar1.setCircleApertureWidth(40);
         NumTipSeekBar seekbar2 = (NumTipSeekBar) findViewById(R.id.ntsb_seekbar2);
         if (seekbar1 != null) {
             seekbar1.setOnProgressChangeListener(new NumTipSeekBar.OnProgressChangeListener() {

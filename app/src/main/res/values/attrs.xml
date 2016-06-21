@@ -7,9 +7,12 @@
         <attr name="circleButtonTextColor" format="color"/>
         <attr name="circleButtonTextSize" format="dimension"/>
         <attr name="circleButtonRadius" format="dimension"/>
+        <attr name="circleApertureWidth" format="dimension"/>
+        <attr name="circleApertureColor" format="color"/>
         <attr name="progressHeight" format="dimension"/>
         <attr name="progressColor" format="color"/>
         <attr name="selectProgress" format="integer"/>
+        <attr name="startProgress" format="integer"/>
         <attr name="maxProgress" format="integer"/>
         <attr name="isShowButtonText" format="boolean"/>
         <attr name="isShowButton" format="boolean"/>
