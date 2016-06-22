@@ -263,6 +263,7 @@ public class NumTipSeekBar extends View {
             //如果设置不可用，则禁用触摸设置进度
             return false;
         }
+        getParent().requestDisallowInterceptTouchEvent(true);
         float x = event.getX();
         float y = event.getY();
 //        Log.i(TAG, "onTouchEvent: x：" + x);
