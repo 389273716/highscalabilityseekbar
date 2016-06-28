@@ -141,7 +141,7 @@ public class NumTipSeekBar extends View {
      */
     private Paint mCircleAperturePaint;
     /**
-     *是否显示圆形光圈
+     * 是否显示圆形光圈
      */
     private boolean mIsShowCircleAperture;
 
@@ -184,7 +184,7 @@ public class NumTipSeekBar extends View {
      * 初始化view的属性
      *
      * @param context 上下文
-     * @param attrs attr属性
+     * @param attrs   attr属性
      */
     private void init(Context context, AttributeSet attrs) {
 
@@ -423,6 +423,7 @@ public class NumTipSeekBar extends View {
      */
     public void setTickBarColor(int tickBarColor) {
         mTickBarColor = tickBarColor;
+        mTickBarPaint.setColor(mTickBarColor);
     }
 
     /**
@@ -441,6 +442,7 @@ public class NumTipSeekBar extends View {
      */
     public void setCircleButtonColor(int circleButtonColor) {
         mCircleButtonColor = circleButtonColor;
+        mCircleButtonPaint.setColor(mCircleButtonColor);
     }
 
     /**
@@ -459,6 +461,7 @@ public class NumTipSeekBar extends View {
      */
     public void setCircleButtonTextColor(int circleButtonTextColor) {
         mCircleButtonTextColor = circleButtonTextColor;
+        mCircleButtonTextPaint.setColor(mCircleButtonTextColor);
     }
 
     /**
@@ -477,6 +480,7 @@ public class NumTipSeekBar extends View {
      */
     public void setCircleButtonTextSize(float circleButtonTextSize) {
         mCircleButtonTextSize = circleButtonTextSize;
+        mCircleButtonTextPaint.setTextSize(mCircleButtonTextSize);
     }
 
     /**
@@ -531,6 +535,7 @@ public class NumTipSeekBar extends View {
      */
     public void setProgressColor(int progressColor) {
         mProgressColor = progressColor;
+        mProgressPaint.setColor(mProgressColor);
     }
 
     /**
@@ -638,15 +643,15 @@ public class NumTipSeekBar extends View {
      */
     public void setCircleApertureColor(int circleApertureColor) {
         mCircleApertureColor = circleApertureColor;
+        mCircleAperturePaint.setColor(mCircleApertureColor);
     }
-
 
 
     /**
      * 获取dp对应的px值
      *
      * @param value
-     * @return  dp对应的px值
+     * @return dp对应的px值
      */
     private int getDpValue(int value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getContext()
