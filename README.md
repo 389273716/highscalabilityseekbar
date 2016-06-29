@@ -15,4 +15,4 @@ Support the view itself most of the attributes of the XML configuration and code
 
 ##How To Use
 
-compile 'com.tc.seekbar:library:0.1.0'
+compile 'com.tc.seekbar:library:0.1.+'
