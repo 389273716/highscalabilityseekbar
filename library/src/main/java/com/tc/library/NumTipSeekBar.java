@@ -631,9 +631,7 @@ public class NumTipSeekBar extends View {
      */
     public void setCircleApertureWidth(int circleApertureWidth) {
         mCircleApertureWidth = getDpValue(circleApertureWidth);
-        mIsShowCircleAperture = true;
-        if (circleApertureWidth <= 0)
-            mIsShowCircleAperture = false;
+        mIsShowCircleAperture = circleApertureWidth > 0;
     }
 
     /**
@@ -650,7 +648,7 @@ public class NumTipSeekBar extends View {
     /**
      * 获取dp对应的px值
      *
-     * @param value
+     * @param value 要转换的值
      * @return dp对应的px值
      */
     private int getDpValue(int value) {
