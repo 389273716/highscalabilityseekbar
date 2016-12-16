@@ -213,9 +213,9 @@ public class NumTipSeekBar extends View {
         mSelectProgress = attr.getInt(R.styleable.NumTipSeekBar_selectProgress, 0);
         mStartProgress = attr.getInt(R.styleable.NumTipSeekBar_startProgress, 0);
         mMaxProgress = attr.getInt(R.styleable.NumTipSeekBar_maxProgress, 10);
-        mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButtonText, true);
-        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButton, true);
-        mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_isRound, true);
+        mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButtonText, false);
+        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButton, false);
+        mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_isRound, false);
         initView();
 
         attr.recycle();
@@ -654,6 +654,35 @@ public class NumTipSeekBar extends View {
     private int getDpValue(int value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getContext()
                 .getResources().getDisplayMetrics());
+    }
+
+    /**
+     * 是否显示圆形光圈
+     * @param showCircleAperture 是否显示圆形光圈
+     */
+    public void setShowCircleAperture(boolean showCircleAperture) {
+        mIsShowCircleAperture = showCircleAperture;
+    }
+    /**
+     * 是否圆角
+     * @param round 是否圆角
+     */
+    public void setRound(boolean round) {
+        mIsRound = round;
+    }
+    /**
+     * 是否显示按钮文本
+     * @param showButtonText 是否显示按钮文本
+     */
+    public void setShowButtonText(boolean showButtonText) {
+        mIsShowButtonText = showButtonText;
+    }
+    /**
+     * 是否显示按钮
+     * @param showButton 是否显示按钮
+     */
+    public void setShowButton(boolean showButton) {
+        mIsShowButton = showButton;
     }
 }
 
