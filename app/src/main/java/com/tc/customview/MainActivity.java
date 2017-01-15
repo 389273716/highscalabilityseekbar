@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seekbar);
         NumTipSeekBar seekbar1 = (NumTipSeekBar) findViewById(R.id.ntsb_seekbar1);
-        seekbar1.setCircleApertureWidth(40);
         NumTipSeekBar seekbar2 = (NumTipSeekBar) findViewById(R.id.ntsb_seekbar2);
+        NumTipSeekBar seekbar3 = (NumTipSeekBar) findViewById(R.id.ntsb_seekbar3);
         if (seekbar1 != null) {
             seekbar1.setOnProgressChangeListener(new NumTipSeekBar.OnProgressChangeListener() {
                 @Override
@@ -29,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         }
         if (seekbar2 != null) {
             seekbar2.setOnProgressChangeListener(new NumTipSeekBar.OnProgressChangeListener() {
+                @Override
+                public void onChange(int selectProgress) {
+                    showToast(String.valueOf(selectProgress), 1000);
+                }
+            });
+        }
+        if (seekbar3 != null) {
+            seekbar3.setOnProgressChangeListener(new NumTipSeekBar.OnProgressChangeListener() {
                 @Override
                 public void onChange(int selectProgress) {
                     showToast(String.valueOf(selectProgress), 1000);

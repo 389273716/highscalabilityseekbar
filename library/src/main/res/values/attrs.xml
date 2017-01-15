@@ -17,5 +17,7 @@
         <attr name="isShowButtonText" format="boolean"/>
         <attr name="isShowButton" format="boolean"/>
         <attr name="isRound" format="boolean"/>
+        <attr name="borderSize" format="dimension"/>
+        <attr name="borderColor" format="color"/>
     </declare-styleable>
 </resources>

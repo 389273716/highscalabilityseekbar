@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-
 
 import java.math.BigDecimal;
 
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
  * date     2016/4/30 9:30
  * version    1.0.0
  * description  进度条view,按钮带数字提示的seekbar，设置isEnabled=false，可以禁用触摸设置进度的功能
+ * 可以设置圆形按钮的光晕，高度计算取进度条、背景刻度提示，圆形按钮以及光晕效果的高最大值。其它功能参照demo演示。
  * modify by
  */
 public class NumTipSeekBar extends View {
@@ -144,6 +146,22 @@ public class NumTipSeekBar extends View {
      * 是否显示圆形光圈
      */
     private boolean mIsShowCircleAperture;
+    /**
+     * view边框的描边paint
+     */
+    private Paint mBorderPaint;
+    /**
+     * 边框线粗细，dp
+     */
+    private float mBorderSize;
+    /**
+     * 边框线颜色
+     */
+    private int mBorderColor;
+    private RectF mBorderRecf;
+    private int mHeight;
+    private int mWidth;
+    private RectF mCircleApertureRectF;
 
     /**
      * 监听进度条变化
@@ -216,6 +234,9 @@ public class NumTipSeekBar extends View {
         mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButtonText, false);
         mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButton, false);
         mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_isRound, false);
+        mBorderSize = attr.getDimensionPixelOffset(R.styleable.NumTipSeekBar_borderSize, 0);
+        mBorderColor = attr.getColor(R.styleable.NumTipSeekBar_borderColor, getResources()
+                .getColor(R.color.white));
         initView();
 
         attr.recycle();
@@ -224,6 +245,12 @@ public class NumTipSeekBar extends View {
     }
 
     private void initView() {
+        mBorderPaint = new Paint();
+        mBorderPaint.setStrokeWidth(mBorderSize);
+        mBorderPaint.setColor(mBorderColor);
+        mBorderPaint.setStyle(Paint.Style.FILL);
+        mBorderPaint.setAntiAlias(true);
+
         mProgressPaint = new Paint();
         mProgressPaint.setColor(mProgressColor);
         mProgressPaint.setStyle(Paint.Style.FILL);
@@ -235,6 +262,7 @@ public class NumTipSeekBar extends View {
         mCircleButtonPaint.setAntiAlias(true);
 
         mCircleAperturePaint = new Paint();
+//        mCircleAperturePaint.setStrokeWidth(mCircleApertureWidth);
         mCircleAperturePaint.setColor(mCircleApertureColor);
         mCircleAperturePaint.setStyle(Paint.Style.FILL);
         mCircleAperturePaint.setAntiAlias(true);
@@ -254,6 +282,9 @@ public class NumTipSeekBar extends View {
         mTickBarRecf = new RectF();
         mProgressRecf = new RectF();
         mCircleRecf = new RectF();
+        mBorderRecf = new RectF();
+        mCircleApertureRectF = new RectF();
+
         setCircleApertureWidth(mCircleApertureWidth);
     }
 
@@ -291,14 +322,9 @@ public class NumTipSeekBar extends View {
         float end = getPaddingLeft() + mViewWidth;
         float start = getPaddingLeft();
         int progress = mSelectProgress;
-//        Log.i(TAG, "judgePosition: x-start：" + (x - start));
-//        Log.i(TAG, "judgePosition: start:" + start + "  end:" + end + "  mMaxProgress:" +
-//                mMaxProgress);
         if (x >= start) {
             double result = (x - start) / mViewWidth * (float) mMaxProgress;
             BigDecimal bigDecimal = new BigDecimal(result).setScale(0, BigDecimal.ROUND_HALF_UP);
-//            Log.i(TAG, "judgePosition: progress:" + bigDecimal.intValue() + "  result:" + result
-//                    + "  (x - start) / end :" + (x - start) / end);
             progress = bigDecimal.intValue();
             if (progress > mMaxProgress) {
 //                Log.i(TAG, "judgePosition:x > end  超出坐标范围:");
@@ -315,31 +341,111 @@ public class NumTipSeekBar extends View {
 
     }
 
+    private int getMySize(int measureSpec, int defaultSize) {
+
+        int mode = MeasureSpec.getMode(measureSpec);
+        int size = MeasureSpec.getSize(measureSpec);
+        int mySize = defaultSize;
+
+        switch (mode) {
+            case MeasureSpec.UNSPECIFIED: {//如果没有指定大小，就设置为默认大小
+                mySize = defaultSize;
+                break;
+            }
+            case MeasureSpec.AT_MOST: {//如果测量模式是最大取值为size，wrap_content
+                //我们将大小取最大值,你也可以取其他值
+                mySize = (int) (defaultSize + mBorderSize * 2);
+                break;
+            }
+            case MeasureSpec.EXACTLY: {//如果是固定的大小，和默认大小比较，取最大值。match_parent or 固定大小
+                mySize = size < defaultSize ? defaultSize : size;
+                Log.i(TAG, "getMySize: defaultsize:" + defaultSize + "  size:" + size);
+                break;
+            }
+        }
+        return mySize;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+
+        int width = getMySize(widthMeasureSpec, 0);
+        float defaultHeight = mTickBarHeight;
+
+        if (mCircleApertureWidth > 0) {
+            if (defaultHeight < mCircleButtonRadius * 2 + mCircleApertureWidth * 2) {
+                defaultHeight = mCircleButtonRadius * 2 + mCircleApertureWidth * 2;
+            }
+        } else {
+            if (defaultHeight < mCircleButtonRadius * 2)
+                defaultHeight = mCircleButtonRadius * 2;
+        }
+        if (defaultHeight < mProgressHeight) {
+            defaultHeight = mProgressHeight;
+        }
+        int height = getMySize(heightMeasureSpec, (int) defaultHeight);
+//        Log.i(TAG, "onMeasure: width:" + width + "  height:" + height);
+
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = w;
+        mHeight = h;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int width = getWidth();
-        int height = getHeight();
-        initValues(width, height);
+        initValues(mWidth, mHeight);
         if (mIsRound) {
+            //绘制边框
+            if (mBorderSize > 0) {
+                //显示绘制边框，通过后面绘制的图像重叠，只露出边框部分。这里取巧绘制边框线。
+                canvas.drawRoundRect(mBorderRecf, mHeight / 2, mHeight / 2,
+                        mBorderPaint);
+            }
+
             canvas.drawRoundRect(mTickBarRecf, mProgressHeight / 2, mProgressHeight / 2,
-                    mTickBarPaint);
-            canvas.drawRoundRect(mProgressRecf, mProgressHeight / 2, mProgressHeight / 2,
-                    mProgressPaint);
+                    mTickBarPaint);//绘制背景刻度
+
+            if (mSelectProgress > mStartProgress) {
+                int saveCount = canvas.saveLayer(mProgressRecf, mProgressPaint, Canvas
+                        .ALL_SAVE_FLAG);
+                canvas.drawRoundRect(mTickBarRecf, mProgressHeight / 2, mProgressHeight / 2,
+                        mProgressPaint);//这里用画进度的画笔又绘制一个背景刻度，一会要做图形异或处理，获取进度的最终形状
+                mProgressPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+                //叠加异或形状
+                canvas.drawRect(mProgressRecf, mProgressPaint);
+                mProgressPaint.setXfermode(null);
+                canvas.restoreToCount(saveCount);//保存，这样后面的绘制不会受到影响
+            }
         } else {
+            //绘制边框
+            if (mBorderSize > 0) {
+                canvas.drawRect(mBorderRecf, mBorderPaint);
+            }
             canvas.drawRect(mTickBarRecf, mTickBarPaint);
-            canvas.drawRect(mProgressRecf, mProgressPaint);
+            if (mSelectProgress > mStartProgress) {
+                canvas.drawRect(mProgressRecf, mProgressPaint);
+            }
         }
         if (mIsShowButton) {
             if (mIsShowCircleAperture) {
-                if (mViewHeight / 2 < mCircleButtonRadius + mCircleApertureWidth) {
-                    mCircleApertureWidth = (int) (mViewHeight / 2 - mCircleButtonRadius);
-                }
-                canvas.drawCircle(mCirclePotionX, mViewHeight / 2, mCircleButtonRadius +
-                                mCircleApertureWidth,
-                        mCircleAperturePaint);
+//                if (mViewHeight / 2 < mCircleButtonRadius + mCircleApertureWidth) {
+//                    mCircleApertureWidth = (int) (mViewHeight / 2 - mCircleButtonRadius);
+//                }
+                canvas.drawCircle(mCirclePotionX, mHeight / 2 ,
+                        mCircleButtonRadius +
+                        mCircleApertureWidth, mCircleAperturePaint);
+                Log.i(TAG, "onDraw: 显示圆形按钮光晕效果");
+//                canvas.drawArc(mCircleApertureRectF, 0, 360, false, mCircleAperturePaint);
             }
-            canvas.drawCircle(mCirclePotionX, mViewHeight / 2, mCircleButtonRadius,
+            canvas.drawCircle(mCirclePotionX, mHeight / 2, mCircleButtonRadius,
                     mCircleButtonPaint);
 
         }
@@ -357,36 +463,46 @@ public class NumTipSeekBar extends View {
     }
 
     private void initValues(int width, int height) {
-        mViewWidth = width - getPaddingRight() - getPaddingLeft();
-        mViewHeight = height;
-        mCirclePotionX = (float) (mSelectProgress - mStartProgress) /
-                (mMaxProgress - mStartProgress) * mViewWidth + getPaddingLeft();
-//        Log.i(TAG, "initValues: mViewWidth=" + mViewWidth + "  mViewHeight=" + mViewHeight + "
-// mCirclePotionX=" + mCirclePotionX + "  mSelectProgress=" + mSelectProgress + " mMaxProgress="
-// + mMaxProgress + " getPaddingLeft()=" + getPaddingLeft());
+        //view内容区域的高宽，不含边框。不是整体view的高宽
+        mViewWidth = (int) (width - mBorderSize * 2);
+        mViewHeight = (int) (height - mBorderSize * 2);
+
+        int leftPadding = (int) mBorderSize;
+        int topPadding = (int) mBorderSize;
+
         if (mTickBarHeight > mViewHeight) {
             //如果刻度条的高度大于view本身的高度的1/2，则显示不完整，所以处理下。
             mTickBarHeight = mViewHeight;
         }
-        mTickBarRecf.set(getPaddingLeft(), (mViewHeight - mTickBarHeight) / 2,
-                mViewWidth + getPaddingLeft(), mTickBarHeight / 2 +
-                        mViewHeight / 2);
+        mTickBarRecf.set(leftPadding, (mViewHeight - mTickBarHeight) /
+                2 + topPadding, mViewWidth + leftPadding, mTickBarHeight / 2 +
+                mViewHeight / 2 + topPadding);
+        mBorderRecf.set(mTickBarRecf.left - mBorderSize, mTickBarRecf.top - mBorderSize,
+                mTickBarRecf
+                        .right + mBorderSize, mTickBarRecf.bottom + mBorderSize); //边框是紧贴边缘绘制
+
+        mCirclePotionX = (float) (mSelectProgress - mStartProgress) /
+                (mMaxProgress - mStartProgress) * mViewWidth + leftPadding;//原型按按钮圆心点，也是进度条的右结束点
+
         if (mProgressHeight > mViewHeight) {
             //如果刻度条的高度大于view本身的高度的1/2，则显示不完整，所以处理下。
             mProgressHeight = mViewHeight;
         }
 
-        mProgressRecf.set(getPaddingLeft(), (mViewHeight - mProgressHeight) / 2,
-                mCirclePotionX, mProgressHeight / 2 + mViewHeight / 2);
+        mProgressRecf.set(leftPadding, (mViewHeight - mProgressHeight) / 2 + topPadding,
+                mCirclePotionX, mProgressHeight / 2 + mViewHeight / 2 + topPadding);
 
         if (mCircleButtonRadius > mViewHeight / 2) {
             //如果圆形按钮的半径大于view本身的高度的1/2，则显示不完整，所以处理下。
             mCircleButtonRadius = mViewHeight / 2;
         }
         mCircleRecf.set(mCirclePotionX - mCircleButtonRadius, mViewHeight / 2 -
-                        mCircleButtonRadius / 2,
+                        mCircleButtonRadius + topPadding,
                 mCirclePotionX + mCircleButtonRadius, mViewHeight / 2 +
-                        mCircleButtonRadius / 2);
+                        mCircleButtonRadius + topPadding);
+        mCircleApertureRectF.set(mCircleRecf.left - mCircleApertureWidth, mCircleRecf.top -
+                mCircleApertureWidth, mCircleRecf.right + mCircleApertureWidth, mCircleRecf.bottom +
+                mCircleApertureWidth);
     }
 
     /**
@@ -658,31 +774,67 @@ public class NumTipSeekBar extends View {
 
     /**
      * 是否显示圆形光圈
+     *
      * @param showCircleAperture 是否显示圆形光圈
      */
     public void setShowCircleAperture(boolean showCircleAperture) {
         mIsShowCircleAperture = showCircleAperture;
     }
+
     /**
      * 是否圆角
+     *
      * @param round 是否圆角
      */
     public void setRound(boolean round) {
         mIsRound = round;
     }
+
     /**
      * 是否显示按钮文本
+     *
      * @param showButtonText 是否显示按钮文本
      */
     public void setShowButtonText(boolean showButtonText) {
         mIsShowButtonText = showButtonText;
     }
+
     /**
      * 是否显示按钮
+     *
      * @param showButton 是否显示按钮
      */
     public void setShowButton(boolean showButton) {
         mIsShowButton = showButton;
+    }
+
+
+    public float getBorderSize() {
+        return mBorderSize;
+    }
+
+    /**
+     * 设置边框粗细，px值
+     * @param borderSize 边框大小
+     */
+    public void setBorderSize(float borderSize) {
+        mBorderSize = borderSize;
+        mBorderPaint.setStrokeWidth(mBorderSize);
+
+    }
+
+    public int getBorderColor() {
+        return mBorderColor;
+    }
+
+    /**
+     * 设置颜色，不是resourceId
+     * @param borderColor 颜色
+     */
+    public void setBorderColor(int borderColor) {
+        mBorderColor = borderColor;
+        mBorderPaint.setColor(mBorderColor);
+
     }
 }
 
