@@ -208,34 +208,34 @@ public class NumTipSeekBar extends View {
 
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.NumTipSeekBar);
         mTickBarHeight = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_tickBarHeight, getDpValue(8));
-        mTickBarColor = attr.getColor(R.styleable.NumTipSeekBar_tickBarColor, getResources()
+                .NumTipSeekBar_NumTipSeekBar_tickBarHeight, getDpValue(8));
+        mTickBarColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_tickBarColor, getResources()
                 .getColor(R.color.orange_f6));
-        mCircleButtonColor = attr.getColor(R.styleable.NumTipSeekBar_circleButtonColor,
+        mCircleButtonColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleButtonColor,
                 getResources().getColor(R.color.white));
-        mCircleButtonTextColor = attr.getColor(R.styleable.NumTipSeekBar_circleButtonTextColor,
+        mCircleButtonTextColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleButtonTextColor,
                 getResources().getColor(R.color.purple_82));
         mCircleButtonTextSize = attr.getDimension(R.styleable
-                .NumTipSeekBar_circleButtonTextSize, getDpValue(16));
+                .NumTipSeekBar_NumTipSeekBar_circleButtonTextSize, getDpValue(16));
         mCircleButtonRadius = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_circleButtonRadius, getDpValue(16));
+                .NumTipSeekBar_NumTipSeekBar_circleButtonRadius, getDpValue(16));
         mCircleApertureWidth = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_circleApertureWidth, getDpValue(0));
-        mCircleApertureColor = attr.getColor(R.styleable.NumTipSeekBar_circleApertureColor,
+                .NumTipSeekBar_NumTipSeekBar_circleApertureWidth, getDpValue(0));
+        mCircleApertureColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleApertureColor,
                 getResources().getColor(R.color.white_1a));
 
         mProgressHeight = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_progressHeight, getDpValue(20));
-        mProgressColor = attr.getColor(R.styleable.NumTipSeekBar_progressColor,
+                .NumTipSeekBar_NumTipSeekBar_progressHeight, getDpValue(20));
+        mProgressColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_progressColor,
                 getResources().getColor(R.color.white));
-        mSelectProgress = attr.getInt(R.styleable.NumTipSeekBar_selectProgress, 0);
-        mStartProgress = attr.getInt(R.styleable.NumTipSeekBar_startProgress, 0);
-        mMaxProgress = attr.getInt(R.styleable.NumTipSeekBar_maxProgress, 10);
-        mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButtonText, false);
-        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_isShowButton, false);
-        mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_isRound, false);
-        mBorderSize = attr.getDimensionPixelOffset(R.styleable.NumTipSeekBar_borderSize, 0);
-        mBorderColor = attr.getColor(R.styleable.NumTipSeekBar_borderColor, getResources()
+        mSelectProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_selectProgress, 0);
+        mStartProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_startProgress, 0);
+        mMaxProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_maxProgress, 10);
+        mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isShowButtonText, false);
+        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isShowButton, false);
+        mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isRound, false);
+        mBorderSize = attr.getDimensionPixelOffset(R.styleable.NumTipSeekBar_NumTipSeekBar_borderSize, 0);
+        mBorderColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_borderColor, getResources()
                 .getColor(R.color.white));
         initView();
 

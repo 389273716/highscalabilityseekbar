@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //Error:java.lang.RuntimeException: Some file crunching failed, see logs for details  -----fix
+    // bug
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+
+    }
 }
 
 dependencies {

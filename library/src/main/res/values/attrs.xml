@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="NumTipSeekBar">
-        <attr name="tickBarHeight" format="dimension"/>
-        <attr name="tickBarColor" format="color"/>
-        <attr name="circleButtonColor" format="color"/>
-        <attr name="circleButtonTextColor" format="color"/>
-        <attr name="circleButtonTextSize" format="dimension"/>
-        <attr name="circleButtonRadius" format="dimension"/>
-        <attr name="circleApertureWidth" format="dimension"/>
-        <attr name="circleApertureColor" format="color"/>
-        <attr name="progressHeight" format="dimension"/>
-        <attr name="progressColor" format="color"/>
-        <attr name="selectProgress" format="integer"/>
-        <attr name="startProgress" format="integer"/>
-        <attr name="maxProgress" format="integer"/>
-        <attr name="isShowButtonText" format="boolean"/>
-        <attr name="isShowButton" format="boolean"/>
-        <attr name="isRound" format="boolean"/>
-        <attr name="borderSize" format="dimension"/>
-        <attr name="borderColor" format="color"/>
+        <attr name="NumTipSeekBar_tickBarHeight" format="dimension"/>
+        <attr name="NumTipSeekBar_tickBarColor" format="color"/>
+        <attr name="NumTipSeekBar_circleButtonColor" format="color"/>
+        <attr name="NumTipSeekBar_circleButtonTextColor" format="color"/>
+        <attr name="NumTipSeekBar_circleButtonTextSize" format="dimension"/>
+        <attr name="NumTipSeekBar_circleButtonRadius" format="dimension"/>
+        <attr name="NumTipSeekBar_circleApertureWidth" format="dimension"/>
+        <attr name="NumTipSeekBar_circleApertureColor" format="color"/>
+        <attr name="NumTipSeekBar_progressHeight" format="dimension"/>
+        <attr name="NumTipSeekBar_progressColor" format="color"/>
+        <attr name="NumTipSeekBar_selectProgress" format="integer"/>
+        <attr name="NumTipSeekBar_startProgress" format="integer"/>
+        <attr name="NumTipSeekBar_maxProgress" format="integer"/>
+        <attr name="NumTipSeekBar_isShowButtonText" format="boolean"/>
+        <attr name="NumTipSeekBar_isShowButton" format="boolean"/>
+        <attr name="NumTipSeekBar_isRound" format="boolean"/>
+        <attr name="NumTipSeekBar_borderSize" format="dimension"/>
+        <attr name="NumTipSeekBar_borderColor" format="color"/>
     </declare-styleable>
 </resources>
