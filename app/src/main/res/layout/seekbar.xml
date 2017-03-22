@@ -51,19 +51,19 @@
 
     <com.tc.library.NumTipSeekBar
         android:id="@+id/ntsb_seekbar3"
-        android:layout_width="match_parent"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="80dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="50dp"
         app:NumTipSeekBar_borderColor="@color/orange_f6"
-        app:NumTipSeekBar_borderSize="2dp"
+        app:NumTipSeekBar_borderSize="1dp"
         app:NumTipSeekBar_isRound="true"
         app:NumTipSeekBar_maxProgress="100"
         app:NumTipSeekBar_progressColor="@color/white"
-        app:NumTipSeekBar_progressHeight="40dp"
+        app:NumTipSeekBar_progressHeight="6dp"
         app:NumTipSeekBar_selectProgress="10"
         app:NumTipSeekBar_tickBarColor="@color/colorAccent"
-        app:NumTipSeekBar_tickBarHeight="40dp"
+        app:NumTipSeekBar_tickBarHeight="6dp"
         />
 </LinearLayout>

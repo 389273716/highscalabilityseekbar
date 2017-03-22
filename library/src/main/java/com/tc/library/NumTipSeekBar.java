@@ -209,33 +209,41 @@ public class NumTipSeekBar extends View {
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.NumTipSeekBar);
         mTickBarHeight = attr.getDimensionPixelOffset(R.styleable
                 .NumTipSeekBar_NumTipSeekBar_tickBarHeight, getDpValue(8));
-        mTickBarColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_tickBarColor, getResources()
+        mTickBarColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_tickBarColor,
+                getResources()
                 .getColor(R.color.orange_f6));
-        mCircleButtonColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleButtonColor,
+        mCircleButtonColor = attr.getColor(R.styleable
+                .NumTipSeekBar_NumTipSeekBar_circleButtonColor,
                 getResources().getColor(R.color.white));
-        mCircleButtonTextColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleButtonTextColor,
+        mCircleButtonTextColor = attr.getColor(R.styleable
+                .NumTipSeekBar_NumTipSeekBar_circleButtonTextColor,
                 getResources().getColor(R.color.purple_82));
         mCircleButtonTextSize = attr.getDimension(R.styleable
-                .NumTipSeekBar_NumTipSeekBar_circleButtonTextSize, getDpValue(16));
+                .NumTipSeekBar_NumTipSeekBar_circleButtonTextSize, 0);
         mCircleButtonRadius = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_NumTipSeekBar_circleButtonRadius, getDpValue(16));
+                .NumTipSeekBar_NumTipSeekBar_circleButtonRadius, 0);
         mCircleApertureWidth = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_NumTipSeekBar_circleApertureWidth, getDpValue(0));
-        mCircleApertureColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_circleApertureColor,
+                .NumTipSeekBar_NumTipSeekBar_circleApertureWidth, 0);
+        mCircleApertureColor = attr.getColor(R.styleable
+                .NumTipSeekBar_NumTipSeekBar_circleApertureColor,
                 getResources().getColor(R.color.white_1a));
 
         mProgressHeight = attr.getDimensionPixelOffset(R.styleable
-                .NumTipSeekBar_NumTipSeekBar_progressHeight, getDpValue(20));
+                .NumTipSeekBar_NumTipSeekBar_progressHeight, 0);
         mProgressColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_progressColor,
                 getResources().getColor(R.color.white));
         mSelectProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_selectProgress, 0);
         mStartProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_startProgress, 0);
         mMaxProgress = attr.getInt(R.styleable.NumTipSeekBar_NumTipSeekBar_maxProgress, 10);
-        mIsShowButtonText = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isShowButtonText, false);
-        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isShowButton, false);
+        mIsShowButtonText = attr.getBoolean(R.styleable
+                .NumTipSeekBar_NumTipSeekBar_isShowButtonText, false);
+        mIsShowButton = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isShowButton,
+                false);
         mIsRound = attr.getBoolean(R.styleable.NumTipSeekBar_NumTipSeekBar_isRound, false);
-        mBorderSize = attr.getDimensionPixelOffset(R.styleable.NumTipSeekBar_NumTipSeekBar_borderSize, 0);
-        mBorderColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_borderColor, getResources()
+        mBorderSize = attr.getDimensionPixelOffset(R.styleable
+                .NumTipSeekBar_NumTipSeekBar_borderSize, 0);
+        mBorderColor = attr.getColor(R.styleable.NumTipSeekBar_NumTipSeekBar_borderColor,
+                getResources()
                 .getColor(R.color.white));
         initView();
 
@@ -377,16 +385,22 @@ public class NumTipSeekBar extends View {
         if (mCircleApertureWidth > 0) {
             if (defaultHeight < mCircleButtonRadius * 2 + mCircleApertureWidth * 2) {
                 defaultHeight = mCircleButtonRadius * 2 + mCircleApertureWidth * 2;
+                Log.i(TAG, "onMeasure: defaultHeight 1 :"+defaultHeight);
             }
         } else {
-            if (defaultHeight < mCircleButtonRadius * 2)
+            if (defaultHeight < mCircleButtonRadius * 2){
                 defaultHeight = mCircleButtonRadius * 2;
+                Log.i(TAG, "onMeasure: defaultHeight 2 :"+defaultHeight);
+
+            }
         }
         if (defaultHeight < mProgressHeight) {
             defaultHeight = mProgressHeight;
+            Log.i(TAG, "onMeasure: defaultHeight 3 :"+defaultHeight);
+
         }
         int height = getMySize(heightMeasureSpec, (int) defaultHeight);
-//        Log.i(TAG, "onMeasure: width:" + width + "  height:" + height);
+        Log.i(TAG, "onMeasure: width:" + width + "  height:" + height);
 
         setMeasuredDimension(width, height);
     }
@@ -406,11 +420,12 @@ public class NumTipSeekBar extends View {
             //绘制边框
             if (mBorderSize > 0) {
                 //显示绘制边框，通过后面绘制的图像重叠，只露出边框部分。这里取巧绘制边框线。
-                canvas.drawRoundRect(mBorderRecf, mHeight / 2, mHeight / 2,
+                canvas.drawRoundRect(mBorderRecf, mTickBarHeight / 2 + mBorderSize, mHeight / 2 +
+                        mBorderSize,
                         mBorderPaint);
             }
 
-            canvas.drawRoundRect(mTickBarRecf, mProgressHeight / 2, mProgressHeight / 2,
+            canvas.drawRoundRect(mTickBarRecf, mTickBarHeight / 2, mTickBarHeight / 2,
                     mTickBarPaint);//绘制背景刻度
 
             if (mSelectProgress > mStartProgress) {
@@ -439,9 +454,9 @@ public class NumTipSeekBar extends View {
 //                if (mViewHeight / 2 < mCircleButtonRadius + mCircleApertureWidth) {
 //                    mCircleApertureWidth = (int) (mViewHeight / 2 - mCircleButtonRadius);
 //                }
-                canvas.drawCircle(mCirclePotionX, mHeight / 2 ,
+                canvas.drawCircle(mCirclePotionX, mHeight / 2,
                         mCircleButtonRadius +
-                        mCircleApertureWidth, mCircleAperturePaint);
+                                mCircleApertureWidth, mCircleAperturePaint);
                 Log.i(TAG, "onDraw: 显示圆形按钮光晕效果");
 //                canvas.drawArc(mCircleApertureRectF, 0, 360, false, mCircleAperturePaint);
             }
@@ -815,6 +830,7 @@ public class NumTipSeekBar extends View {
 
     /**
      * 设置边框粗细，px值
+     *
      * @param borderSize 边框大小
      */
     public void setBorderSize(float borderSize) {
@@ -829,6 +845,7 @@ public class NumTipSeekBar extends View {
 
     /**
      * 设置颜色，不是resourceId
+     *
      * @param borderColor 颜色
      */
     public void setBorderColor(int borderColor) {
